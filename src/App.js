@@ -4,10 +4,18 @@ import { useState } from "react";
 
 function App() {
   const [text, setText] = useState("");
+  const [translatedText, setTranslatedText] = useState("");
+  const [isTranslated, setIsTranslated] = useState(false);
+  const URI = "https://api.funtranslations.com/translate/pig-latin.json";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(text);
+    const res = await fetch(`${URI}?text=${text}`);
+    const data = await res.json();
+    if (data) {
+      setTranslatedText(data);
+      setIsTranslated(true);
+    }
   };
 
   return (
